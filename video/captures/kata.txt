@@ -1,0 +1,19 @@
+$ uname -r    # host kernel
+  7.0.0-1011-gcp
+$ kubectl get runtimeclass kata-qemu
+  NAME        HANDLER     AGE
+  kata-qemu   kata-qemu   89m
+$ kubectl -n agent-sandboxes get networkpolicy
+  NAME       POD-SELECTOR   AGE
+  deny-all   <none>         86m
+$ kubectl -n agent-sandboxes exec probe -- uname -r   # guest
+  6.18.35
+$ POST /ask  (Kata sandbox)
+  backend: agent-sandbox/kata-qemu
+  sandbox: agent-sandboxes/trio-7f1d796e (kata-qemu)
+  exit=0  time=4108 ms
+  attempts: 1
+  > Payer with highest denial rate: BCBS
+  > Denial rate: 63.00% (63/100)
+  > Most common denial reason: CO-197 no prior auth
+  > Total billed amount of denied claims: 27714.87

@@ -1,0 +1,18 @@
+$ uname -r    # host kernel
+  7.0.0-1011-gcp
+$ cat ~/.config/openshell/gateway.env
+  OPENSHELL_COMPUTE_DRIVER=vm
+$ openshell sandbox exec -n probe --no-tty -- uname -r   # microVM
+  6.12.76
+$ openshell sandbox exec -n probe --no-tty -- python3 -c "import urllib.request as u; u.urlopen('https://example.com',timeout=5)"
+  ... (traceback trimmed)
+  urllib.error.URLError: <urlopen error [Errno 13] Permission denied>  # egress blocked
+$ POST /ask  (OpenShell microVM)
+  backend: openshell
+  sandbox: openshell/trio-9126ec5b
+  exit=0  time=7343 ms
+  attempts: 1
+  > Payer with highest denial rate: BCBS
+  > Denial rate: 63.00% (63/100)
+  > Most common denial reason: CO-197 no prior auth
+  > Total billed amount of denied claims: 27714.87

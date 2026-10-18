@@ -1,0 +1,25 @@
+# Least-privilege identity for the agent app: it can only manage Sandboxes and exec into their pods,
+# and only inside agent-sandboxes.
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: trio-agent, namespace: agent-sandboxes}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: trio-agent, namespace: agent-sandboxes}
+rules:
+- apiGroups: [agents.x-k8s.io]
+  resources: [sandboxes]
+  verbs: [create, get, list, watch, delete, patch]
+- apiGroups: [""]
+  resources: [pods]
+  verbs: [get, list]
+- apiGroups: [""]
+  resources: [pods/exec]
+  verbs: [create, get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: trio-agent, namespace: agent-sandboxes}
+subjects: [{kind: ServiceAccount, name: trio-agent, namespace: agent-sandboxes}]
+roleRef: {kind: Role, name: trio-agent, apiGroup: rbac.authorization.k8s.io}

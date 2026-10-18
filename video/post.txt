@@ -1,0 +1,21 @@
+Where should an AI agent run the code it writes, if you're a bank, insurer or hospital?
+
+When an agent writes and runs code against regulated data, the question isn't which LLM. It's what stops that code from reaching the host, the network or the data next door.
+
+So I built one governed agent (Java: Spring AI 2.0 + LangGraph4j) that answers claims-analytics questions on synthetic health-insurance data. The model only ever sees the schema, every step goes into an audit trail, and the code runs in a throwaway sandbox. Then I swapped the sandbox underneath it:
+
+🔹 Kata Containers + Kubernetes Agent Sandbox (k3s): each run gets its own VM and its own kernel. ~4 s per run.
+🔹 GKE Sandbox (gVisor): a user-space kernel, plus a service account allowed only to create sandboxes. ~6 s.
+🔹 NVIDIA OpenShell (microVM driver): deny-by-default policy and its own kernel. ~7 s.
+
+All three gave the same, independently verified answer, with network access blocked and the sandbox destroyed after every run. Every terminal in the video is a real capture.
+
+What I learned:
+1️⃣ Kubernetes on its own doesn't isolate untrusted code. Kata, gVisor or a microVM does.
+2️⃣ The same tool can be safe or unsafe depending on configuration. OpenShell on its Docker driver shares the host kernel; on its microVM driver it doesn't.
+3️⃣ Managed sandboxes are fast and some come with a HIPAA BAA, but the data leaves your VPC. For RBI, DPDP or EU AI Act high-risk work, that often decides it.
+4️⃣ You no longer need bare metal: nested virtualization on regular cloud VMs ran Kata fine.
+
+Keep the agent the same and pick the isolation level each client's risk appetite needs.
+
+#AIAgents #RegTech #ResponsibleAI #Kubernetes #SpringAI #HealthcareAI #BFSI

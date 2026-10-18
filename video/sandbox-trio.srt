@@ -1,0 +1,124 @@
+1
+00:00:00,000 --> 00:00:01,652
+AI Agentic Enterprises.
+
+2
+00:00:01,652 --> 00:00:07,039
+Founder Yuvaraj Aravindan has been solving enterprise IT for three decades.
+
+3
+00:00:07,039 --> 00:00:13,450
+Today: where should an AI agent run the code it writes, when the data is regulated?
+
+4
+00:00:13,450 --> 00:00:20,330
+AI agents now write and run their own code, against claims, payments and patient records.
+
+5
+00:00:20,330 --> 00:00:26,039
+If that code can reach the host, the network, or leaves no evidence, no regulator will sign
+
+6
+00:00:26,039 --> 00:00:26,740
+off.
+
+7
+00:00:26,740 --> 00:00:32,500
+So we built one governed agent in Java, with Spring AI and LangGraph4j.
+
+8
+00:00:32,500 --> 00:00:34,775
+The model sees only the schema.
+
+9
+00:00:34,775 --> 00:00:41,599
+It writes Python, the code runs in a throwaway sandbox, errors are retried, and every step is
+
+10
+00:00:41,599 --> 00:00:44,030
+hashed into an audit trail.
+
+11
+00:00:44,030 --> 00:00:44,840
+Option one.
+
+12
+00:00:44,840 --> 00:00:50,270
+Kata Containers on Kubernetes, managed by the Agent Sandbox controller.
+
+13
+00:00:50,270 --> 00:00:52,124
+The host runs kernel 7.
+
+14
+00:00:52,124 --> 00:00:58,252
+Inside the sandbox, 6.18: its own virtual machine. Network denied by policy.
+
+15
+00:00:58,252 --> 00:01:01,640
+Answer in about four seconds.
+
+16
+00:01:01,640 --> 00:01:02,641
+Option two.
+
+17
+00:01:02,641 --> 00:01:06,480
+Google's GKE Sandbox, powered by gVisor.
+
+18
+00:01:06,480 --> 00:01:12,456
+The agent's service account can create sandboxes, and nothing else. It can't read secrets.
+
+19
+00:01:12,456 --> 00:01:17,490
+Inside, gVisor answers as its own kernel. Under six seconds.
+
+20
+00:01:17,490 --> 00:01:18,505
+Option three.
+
+21
+00:01:18,505 --> 00:01:22,530
+NVIDIA OpenShell, switched to its microVM driver.
+
+22
+00:01:22,530 --> 00:01:30,340
+Again, its own kernel, and the outbound internet call is refused. About seven seconds.
+
+23
+00:01:30,340 --> 00:01:34,500
+The infrastructure: one Google Cloud project.
+
+24
+00:01:34,500 --> 00:01:41,268
+Two N2 virtual machines with nested virtualization, so no bare metal, and one GKE cluster with
+
+25
+00:01:41,268 --> 00:01:45,750
+a gVisor node pool. Everything scales to zero when idle.
+
+26
+00:01:45,750 --> 00:01:51,190
+Three sandboxes, one question, and the same verified answer every time.
+
+27
+00:01:51,190 --> 00:01:57,360
+BCBS has the highest denial rate, with missing prior authorization the top reason.
+
+28
+00:01:57,360 --> 00:02:03,960
+Kubernetes alone doesn't isolate untrusted code. Kata, gVisor or a microVM does.
+
+29
+00:02:03,960 --> 00:02:05,911
+Configuration decides safety.
+
+30
+00:02:05,911 --> 00:02:11,810
+And keep the agent fixed: choose the isolation each client's risk appetite needs.
+
+31
+00:02:11,810 --> 00:02:19,340
+Want governed AI agents built for your regulated enterprise? Visit ai-agentic-enterprises.com.
+

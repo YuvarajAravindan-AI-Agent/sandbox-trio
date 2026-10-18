@@ -1,0 +1,17 @@
+$ kubectl config current-context
+  trio-agent@trio-gke
+$ kubectl auth can-i create sandboxes
+  yes
+$ kubectl auth can-i get secrets -n kube-system
+  no
+$ kubectl exec probe -- uname -r   # gVisor kernel
+  4.4.0
+$ POST /ask  (GKE Sandbox, gVisor)
+  backend: agent-sandbox/gvisor
+  sandbox: agent-sandboxes/trio-49111b15 (gvisor)
+  exit=0  time=5713 ms
+  attempts: 1
+  > Payer with highest denial rate: BCBS
+  > Denial rate: 63.00% (63/100)
+  > Most common denial reason: CO-197 no prior auth
+  > Total billed amount of denied claims: 27714.87

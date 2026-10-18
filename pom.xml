@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.aiagentic</groupId>
+  <artifactId>sandbox-trio</artifactId>
+  <version>0.1.0</version>
+  <name>sandbox-trio</name>
+  <description>Governed claims-analytics agent: Spring AI + LangGraph4j, pluggable code sandbox (Kata / gVisor / OpenShell / Daytona / AgentCore), DeepSeek or Bedrock chat</description>
+
+  <properties>
+    <java.version>21</java.version>
+    <spring-ai.version>2.0.1</spring-ai.version>
+    <langgraph4j.version>1.9.3</langgraph4j.version>
+    <daytona.version>0.222.0</daytona.version>
+    <!-- same AWS SDK line spring-ai-bedrock-converse 2.0.1 is built against -->
+    <awssdk.version>2.51.2</awssdk.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-bom</artifactId>
+        <version>${spring-ai.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-deepseek</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-bedrock-converse</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>bedrockagentcore</artifactId>
+      <version>${awssdk.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bsc.langgraph4j</groupId>
+      <artifactId>langgraph4j-core</artifactId>
+      <version>${langgraph4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.daytona</groupId>
+      <artifactId>sdk</artifactId>
+      <version>${daytona.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
